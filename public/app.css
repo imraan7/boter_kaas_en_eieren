@@ -1,0 +1,15 @@
+.blocks{
+    height : 175px;
+    padding: 60px;
+    border: 1px solid black;
+}
+.helper {
+    font-size: 75px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+.ui{
+    font-weight: bolder;
+    text-align: center;
+}
