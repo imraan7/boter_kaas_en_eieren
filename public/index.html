@@ -48,6 +48,7 @@
 
                         if(turn === false){
                             turnCount++
+                            console.log(turnCount);
                             if(Home.checkOccupied(row, col)){
                                 playfield[row][col] = player1
                                 $("div.block.col-xs-4.blocks[data-row='"+ row +"'][data-column='"+ col +"']").addClass("fa fa-times");
@@ -61,6 +62,9 @@
                                         if(turnCount != 9){
                                             Home.setComputerTurn()
                                         }
+                                        else{
+                                            Home.endGame()
+                                        }
                                     }
                                     else{
                                         Home.endGame()
@@ -70,6 +74,8 @@
                         }
                         else if(turn === true) {
                             if(vs === "player2"){
+                                turnCount++
+                                console.log(turnCount);
                                 if(Home.checkOccupied(row, col)){
                                     playfield[row][col] = player2
                                     $("div.block.col-xs-4.blocks[data-row='"+ row +"'][data-column='"+ col +"']").addClass("fa fa-circle-o")
@@ -182,6 +188,7 @@
                 }
                 */
                 turnCount++
+                console.log(turnCount);
                 cpuRow = Home.randomRowOrCol(0,2)
                 cpuColumn = Home.randomRowOrCol(0,2)
 
@@ -339,22 +346,20 @@
                         end = true
                     }
                 }
-
+                else if(turnCount === 9){
+                    alert("Gelijkspel!!")
+                    end = true
+                }
                 if (end === true){
                     Home.disableField()
                 }
             },
             disableField : function(){
                 turn = null
-                $(".block").click(function(){
-                    $("div").unbind()
-                });
+                    $(".block").addClass("disabledbutton");
             },
 
             restart : function(){
-                console.log("Refresh de pagina.");
-                /*
-                $("div").bind()
                 turn = false
                 playfield = [
                   ['', '', '',],
@@ -365,12 +370,21 @@
                 player2Won = false
                 computerWon = false
                 end = false
+                cpuRow = 4
+                cpuColumn = 4
+                turnCount = 0
                 for (var i = 0; i < playfield.length; i++) {
                     for (var j = 0; j < playfield.length; j++) {
-                        $("div.block.col-xs-4.blocks[data-row='"+ i +"'][data-column='"+ j +"']").removeClass("fa")
+                        $("div.block.col-xs-4.blocks[data-row='"+ i +"'][data-column='"+ j +"']").removeClass("disabledbutton")
+                        if($("div.block.col-xs-4.blocks[data-row='"+ i +"'][data-column='"+ j +"']").hasClass("fa fa-times")){
+                            $("div.block.col-xs-4.blocks[data-row='"+ i +"'][data-column='"+ j +"']").removeClass("fa fa-times")
+                        }
+                        if($("div.block.col-xs-4.blocks[data-row='"+ i +"'][data-column='"+ j +"']").hasClass("fa fa-circle-o")){
+                            $("div.block.col-xs-4.blocks[data-row='"+ i +"'][data-column='"+ j +"']").removeClass("fa fa-circle-o")
+                        }
                     }
                 }
-                */
+                Home.render()
             },
             render : function(){
                 $("#app").html(nunjucks.render("/templates/home.html"))
