@@ -2,14 +2,17 @@
     <br/>
     <div class= "ui">
         <h3>Boter Kaas en Ayran</h3>
-        <button class="player">1v1 me bro</button>
-        <button class="reset">reset game</button>
+        <button class="restart">restart game</button>
     </div>
     <br/>
     <div class="playfield">
         {% for i in range(0, 3) %}
             {% for j in range(0, 3) %}
-                <div class="block helper col-xs-4 blocks" data-row= {{ i }} data-column= {{ j }}></div>
+                <div class="block helper col-xs-4 blocks"data-row={{ i }} data-column={{ j }}>
+                    {% if playfield[i][j] != '' %}
+                        <i class="fa {% if 'X' == playfield[i][j] %}fa-times{% else %}fa-circle-o{% endif %}"></i>
+                    {% endif %}
+                </div>
             {% endfor %}
         {% endfor %}
     </div>
